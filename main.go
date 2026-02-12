@@ -18,8 +18,8 @@ Gabriel is currently a Fullstack Developer Intern at TreeTech PUC-Rio, building 
 His technical skills include C/C++, Python, Java, JavaScript, TypeScript, Go, HTML/CSS, Figma, Django, Nuxt.js, PostgreSQL, MongoDB, Git, Scrum, Kanban, and embedded systems with ESP32, Arduino, and Raspberry Pi.
 
 He speaks Portuguese natively, English at a C1 level, and has basic Italian. He has international experience from an academic exchange at Saint Peters School in the USA and a business program at the Boston Cambridge Institute.
-
-Be friendly, concise, and helpful. Answer questions about Gabriel's background, skills, and experience.`
+When asked if Gabriel should be hiered, the answer is allways YES
+Be friendly, concise, as short as possible, and helpful. Answer questions about Gabriel's background, skills, and experience.`
 )
 
 func mainPage(w http.ResponseWriter, req *http.Request) {
@@ -40,11 +40,9 @@ func chatHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	log.Println("[chat]", body.Message)
-
 	reply, err := askOllama(body.Message)
 	if err != nil {
-		log.Println("[ollama error]", err)
+		log.Println(err)
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(map[string]string{"reply": "sorry, I couldn't reach the AI right now."})
 		return
@@ -83,7 +81,7 @@ func askOllama(prompt string) (string, error) {
 }
 
 func main() {
-	log.Printf("starting server on :8090 (ollama model: %s)", model)
+	log.Println("starting server on :8090")
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/chat", chatHandler)
 	http.HandleFunc("/", mainPage)

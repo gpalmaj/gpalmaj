@@ -24,10 +24,39 @@ window.addEventListener("scroll", () => {
 // Chat form
 const chatLog = document.getElementById("chat-log");
 
+function formatReply(text) {
+  // Sanitize HTML to prevent XSS
+  text = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  // Bold: **text**
+  text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  // Italic: *text*
+  text = text.replace(/\*(.+?)\*/g, "<em>$1</em>");
+  // Convert list items and wrap consecutive ones in <ul>
+  const lines = text.split("\n");
+  const result = [];
+  let inList = false;
+  for (const line of lines) {
+    const listMatch = line.match(/^[\-\*] (.+)/);
+    if (listMatch) {
+      if (!inList) { result.push("<ul>"); inList = true; }
+      result.push("<li>" + listMatch[1] + "</li>");
+    } else {
+      if (inList) { result.push("</ul>"); inList = false; }
+      result.push(line);
+    }
+  }
+  if (inList) result.push("</ul>");
+  return result.join("<br>");
+}
+
 function appendMsg(text, type) {
   const el = document.createElement("div");
   el.className = `chat-msg ${type}`;
-  el.textContent = (type === "sent" ? "> " : "< ") + text;
+  if (type === "sent") {
+    el.textContent = "> " + text;
+  } else {
+    el.innerHTML = "&lt; " + formatReply(text);
+  }
   chatLog.appendChild(el);
   chatLog.scrollTop = chatLog.scrollHeight;
 }
