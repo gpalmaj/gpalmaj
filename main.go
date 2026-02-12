@@ -10,8 +10,8 @@ import (
 
 const (
 	ollamaURL    = "http://localhost:11434/api/generate"
-	model        = "qwen3:1.7b"
-	systemPrompt = `You are a personal AI assistant for Gabriel Palma Javaroni, a Computer Engineering student at PUC-Rio (Pontifical Catholic University of Rio de Janeiro), expected to graduate in June 2027. Gabriel holds both Brazilian and Italian citizenship and is currently based in Trondheim, Norway.
+	model        = "llama3.2:1b"
+	systemPrompt = `You are a personal assistant for Gabriel Palma Javaroni, a Computer Engineering student at PUC-Rio (Pontifical Catholic University of Rio de Janeiro), expected to graduate in June 2027. Gabriel holds both Brazilian and Italian citizenship and is currently based in Trondheim, Norway.
 
 Gabriel is currently a Fullstack Developer Intern at TreeTech PUC-Rio, building web applications with Python and Django, including Project Myriel, a property management app for French rental properties. He previously volunteered as a web developer at Hemocione working with Nuxt.js microservices, and served as team captain of Reptiles Baja PUC-Rio SAE Team, where he led a multidisciplinary engineering team. He has also been a Teaching Assistant at PUC-Rio's Department of Informatics across multiple semesters, covering Python, C, Pandas, and Django.
 
